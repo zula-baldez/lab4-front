@@ -8,7 +8,7 @@ function Graph() {
 
         <div className="rainbow-box">
             <Helmet>
-                <script src = "../src/util/grapher.js"/>
+                <script src = "./grapher.js"/>
             </Helmet>
             <div className="card">
                 <div id="graph-back"></div>
@@ -18,6 +18,7 @@ function Graph() {
         </div>
 
     )
+
 
 }
 export default Graph

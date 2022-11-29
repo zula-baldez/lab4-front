@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 
 function LoginPage() {
@@ -37,6 +37,8 @@ function LoginPage() {
         fetch('http://localhost:8080/try_login', requestOptions)
             .then(result => {
                 if(result.status === 200) {
+                    localStorage.setItem('login', login)
+                    localStorage.setItem('password', password)
                     window.location.href = "/table"
                 } else {
                     //todo erreoro

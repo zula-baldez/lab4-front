@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import Graph from "../elements/Graph";
-import Table from "../elements/Table";
+import AttemptTable from "../elements/AttemptTable";
 import Input from "../elements/Input";
 
 function TablePage() {
@@ -10,7 +10,7 @@ function TablePage() {
         <div>
             <Graph/>
             <Input/>
-            <Table/>
+            <AttemptTable/>
         </div>
     )
 

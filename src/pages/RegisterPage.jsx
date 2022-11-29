@@ -40,6 +40,8 @@ function RegisterPage() {
         fetch('http://localhost:8080/try_register', requestOptions)
             .then(result => {
                 if(result.status === 200) {
+                    localStorage.setItem('login', login)
+                    localStorage.setItem('password', password)
                     window.location.href = "/table"
                 } else {
                     //todo erreoro
