@@ -41,7 +41,7 @@ function LoginPage() {
                     localStorage.setItem('password', password)
                     window.location.href = "/table"
                 } else {
-                    //todo erreoro
+                    alert('Wrong login or password:(')
                 }
             })
             .catch(e => alert(e))

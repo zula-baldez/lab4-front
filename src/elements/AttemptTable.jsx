@@ -56,7 +56,7 @@ function AttemptTable() {
     )
 
 }
-function Attempt({attempt:{attempt, x, y, r, hit} }) {
+function Attempt({attempt:{attempt, x, y, r, hit, workTime, startTime} }) {
 
     return (
         <tr>
@@ -65,6 +65,8 @@ function Attempt({attempt:{attempt, x, y, r, hit} }) {
             <td>{y}</td>
             <td>{r}</td>
             <td>{hit.toString()}</td>
+            <td>{workTime}</td>
+            <td>{new Date(startTime).toLocaleString()}</td>
 
         </tr>
     )

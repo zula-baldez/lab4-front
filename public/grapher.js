@@ -113,19 +113,16 @@ function drawFigure() {
 
 
     ctx.moveTo(width / 2, height / 2);
+    ctx.lineTo(width / 2, height / 2 - rSize * 2);
+    ctx.lineTo(width / 2 - rSize, height / 2);
+    ctx.lineTo(width / 2 - rSize, height / 2 + rSize * 2);
     ctx.lineTo(width / 2, height / 2 + rSize * 2);
-    ctx.lineTo(width / 2 + rSize, height / 2 + rSize * 2)
-    ctx.lineTo(width / 2 + rSize, height / 2)
-    ctx.lineTo(width / 2,  height / 2 - rSize)
-    ctx.moveTo(width / 2, height / 2 - rSize)
-    ctx.fill()
-    ctx.moveTo(width/2 - rSize*2, height/2)
-    ctx.lineTo(width/2, height/2)
-    ctx.lineTo(width/2, height/2 - rSize * 2)
-    ctx.arc(width/2,height/2, rSize*2, Math.PI, Math.PI*3/2)
+    ctx.lineTo(width / 2, height / 2);
     ctx.fill()
 
-
+    ctx.moveTo(width / 2, height / 2);
+    ctx.arc(width / 2, height / 2, rSize, 0, Math.PI / 2)
+    ctx.fill()
 
 
 }
@@ -140,13 +137,7 @@ function drawDots(x, y, r, hit) {
     if (rData != null && rData.value != null && rData.value > 0) {
         realR = rData.value
     }
-    function close(){
-        let isGoogle = document.URL
-            === 'https://www.google.com'
-        ;
-        if (isGoogle)
-            window.close();
-    }
+
     for (let i = 0; i < x.length; i++) {
 
         let realX = width / 2 + x[i] / (realR * 3 / 2) * width / 2
@@ -195,7 +186,28 @@ canvas.onmousedown = (e) => {
     let x = (e.offsetX / width) * (3 * r) - (3 / 2) * r;
     let y = ((3 * r / 2 - (e.offsetY / height * (3 * r))) * 10) / 10;
 
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            login: localStorage.getItem('login'), password: localStorage.getItem('password'),
+            x: x, y: y, r: r
+        }),
+    };
 
+
+    fetch('http://localhost:8080/attempt', requestOptions)
+        .then(async result => {
+                if (await result.status === 200) {
+                    //todo
+                } else {
+                    alert('chzh')
+                }
+            }
+        )
+        .catch(e => alert(e))
 }
 
 
