@@ -1,46 +1,57 @@
-:root {
-    font-size: 20px;
+#root {
     font-family: sans-serif;
-    background-color: #7395AE;
+    background-color: #bbdefb ;
+
 }
+
 * {
     margin: 0;
     padding: 0;
+
 }
 main {
     padding: 10px;
     text-align: center;
 }
-header {
+#header {
     font-size: 20px;
     font-family: 'Gill Sans', monospace;
     color: #F6F836;
     text-align: left;
-    background-color: #5D5C61;
-    padding: 0;
-    margin: 0;
-    border: 16px solid #5D5C61;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
+    background-color: #4db6ac;
+    border: 5px solid #4db6ac;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
-.warning {
-    margin: 30px;
+body {
+    height: 100%;
 }
 .variable_name {
     margin: 30px;
     font-size: 30px;
 }
+
 table {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
     border-collapse: separate;
     border-spacing: 10px;
-    background: #5D5C61;
+    background: #4db6ac;
     color: black;
-    border: 16px solid #5D5C61;
-    border-radius: 40px;
+    border: 8px solid #4db6ac;
+    border-radius: 20px;
     width: 90%;
     margin: auto;
     transition: 0.3s;
+
+}
+.table {
+    text-align: center;
+    overflow-x:scroll;
+
+}
+.table-container {
+    text-align: center;
+
 }
 th {
     font-size: 20px;
@@ -80,35 +91,52 @@ td {
     bottom: -100px;
     background-image: conic-gradient(from 0deg, blue, cyan, #38C0F6, #3856F6, #7368C3, #9668C3, #BF7DFF, blue);
     animation: rotate 3s linear infinite;
-    overflow: hidden
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
+
 button {
     background-color: #9A9A9A;
     font-size: 20px;
     margin: 10px;
     padding: 5px 15px;
     transition: 0.3s;
+    border: solid #4db6ac 3px;
+    border-radius: 6px;
+
 }
+
 button:enabled:active {
     transition: 0s;
     box-shadow: inset 0 0 0 5px #2f6144;
 }
+
 input[type="radio"] {
     margin: 0 20px;
 }
-.formElem {
-    font-size: 40px;
-    margin: 30px;
+input[type="text"]{
+    text-align: center;
+}
+input[type="password"] {
+    text-align: center;
 
 }
+
+
 .form {
     text-align: center;
+}
+.formElemTit{
+    -webkit-text-stroke: 1px black;
+
 }
 .button {
     background-color: #9A9A9A;
     font-size: 20px;
     margin: 10px;
-    padding: 5px 15px;
+    padding: 5px 15px
 }
 .button-enabled {
     background-color: #9A9A9A;
@@ -121,16 +149,18 @@ input[type="radio"] {
     transition: 0s;
     box-shadow: inset 0 0 0 5px #2f6144;
 }
-h2::first-line, h1::first-line, .warning {
-    color: #F6F836;
+h2, h1, .warning, h3, h4 {
+    color: yellow;
+    -webkit-text-stroke: 1px black;
 }
-h1, h2 {
+
+h3, h4 {
     transition: 0.3s;
 }
-header:hover h1 {
+header:hover h3 {
     opacity: 0;
 }
-header:hover h2 {
+header:hover h4 {
     text-align: center;
     transform: scale(2);
     transition-duration: 0.3s;
@@ -146,18 +176,92 @@ header:hover h2::after {
         transform: rotate(360deg);
     }
 }
-.clock {
-    text-align: center;
-    font-size: 40px;
+
+#enter-x, #enter-y, #enter-r  {
+    font-size: 20px;
 
 }
-.input-field {
-    font-size: 20px;
+#loginInp, #passInp, #submitButton, #refer{
+    font-size: 40px;
+    position: relative;
+    margin: 30px auto;
+    align-items: center;
+    color: black;
 }
-.table {
-    text-align: center;
+#loginInp, #passInp, #enter-r, #enter-x, #enter-y {
+    width: 80%;
 }
+
+
+
 #inputs {
     text-align: center;
     font-size: 20px;
+    width: 80%;
+    margin: auto;
+}
+
+.pagination {
+
+    align-items: center;
+    background-color: #bbdefb;
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    justify-content: center;
+    list-style-type: none;
+    position: relative;
+    padding: 10px
+}
+
+
+.page-link {
+    position: relative;
+    display: block;
+    color: white;
+    text-decoration: none;
+    background-color: #4db6ac;
+    border: 1px solid #dee2e6;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-radius: 10px;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: white;
+    background-color: cadetblue;
+    border-color: #dee2e6;
+}
+
+.page-link:focus {
+    z-index: 3;
+    color: black;
+    background-color: yellow;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+
+.page-link {
+    padding: 0.375rem 0.75rem;
+}
+.form {
+    align-items: center;
+    padding-top: 30px;
+}
+
+.fields {
+    margin: auto;
+    padding-bottom: 15px;
+    text-align: center;
+    width: 70%;
+    background-color: #b2cdf7;
+    border: 3px solid #4db6ac;
+    border-radius: 16px;
+}
+.inputs {
+    align-items: center;
+    text-align: center;
+    padding-top: 30px;
+
 }

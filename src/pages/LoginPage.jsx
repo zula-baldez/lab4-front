@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
+import Swal from "sweetalert2";
 
 function LoginPage() {
     const [login, setLogin] = useState("");
@@ -7,19 +8,23 @@ function LoginPage() {
 
     return (
         <div className="form" id="loginForm">
-            <h2 className="formElem">ENTER LOGIN</h2>
-            <input type="text" className="formElem" id = 'loginInp' value = {login}
-                   onChange={(e) => setLogin(e.target.value)}
-            />
+            <div className="fields">
+                <h2 className="formElemTit">ENTER LOGIN</h2>
+                <input type="text" className="formElem" id='loginInp' value={login}
+                       onChange={(e) => setLogin(e.target.value)}
+                />
 
-            <h2 className="formElem">ENTER PASSWORD</h2>
-            <input type="password" className="formElem" id='passInp' value = {password}
-                   onChange={(e) => setPassword(e.target.value)}
+                <h2 className="formElemTit">ENTER PASSWORD</h2>
+                <input type="password" className="formElem" id='passInp' value={password}
+                       onChange={(e) => setPassword(e.target.value)}
 
-            />
+                />
+                <p>
+                    <button className="formElem" onClick={sendLoginQuery} id="submitButton">LOGIN</button>
+                </p>
+            </div>
 
-            <p><button className="formElem" onClick={sendLoginQuery}>LOGIN</button></p>
-            <p><Link to="/register" className="formElem">NEW USER? REGISTER</Link></p>
+            <p><Link to="/register" className="formElem" id="refer">New user? Register</Link></p>
 
         </div>
 
@@ -28,20 +33,24 @@ function LoginPage() {
         if (login == null || password == null) return
         const requestOptions = {
             method: 'POST',
-//          mode: 'no-cors', // no-cors, *cors, same-origin
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({login: login, password: password}),
         };
         fetch('http://localhost:8080/try_login', requestOptions)
-            .then(result => {
-                if(result.status === 200) {
+            .then(async result => {
+                if (result.status === 200) {
                     localStorage.setItem('login', login)
-                    localStorage.setItem('password', password)
+                    let s = await result.json()
+                    localStorage.setItem('Bearer', s.JWT)
                     window.location.href = "/table"
                 } else {
-                    alert('Wrong login or password:(')
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Wrong login or password:(',
+                    })
                 }
             })
             .catch(e => alert(e))
