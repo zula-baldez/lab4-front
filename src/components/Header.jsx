@@ -5,8 +5,8 @@ function Header() {
 
     return (
         <header id="header">
-            <h3>Egor Vereshchagin, P32312</h3>
-            <h4>var. 66652</h4>
+            <h2>Egor Vereshchagin, P32312</h2>
+            <h3>var. 66652</h3>
         </header>
     )
 }

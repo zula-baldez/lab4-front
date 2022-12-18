@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import Swal from "sweetalert2";
-
+import {BASE_URL} from "../index";
 
 function RegisterPage() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-
+    const navigate = useNavigate();
+    const loginClick = async () => navigate('/login');
     return (
         <div className="form" id="registerForm">
             <div className="fields">
@@ -23,39 +24,72 @@ function RegisterPage() {
                 />
 
                 <p>
-                    <button className="formElem" onClick={sendRegisterQuery} id='submitButton'>REGISTER</button>
+                    <button className="formElem" onClick={sendRegisterQuery} id='submitButton'>Register</button>
+                </p>
+                <p>
+                    <button className="formElem" id="refer" onClick={loginClick}>Go back</button>
                 </p>
             </div>
-            <p><Link to="/login" className="formElem" id="refer">Go back</Link></p>
 
         </div>
 
     )
     function sendRegisterQuery() {
-        if (login == null || password == null) return
+        if (login == null || password == null) {
+            return
+        }
+
+
+        if (login.length < 2 || password.length < 2) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Login and password must be at least 2!',
+            })
+            return
+        }
+
+        if (login.length > 15 || password.length > 15) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Login and password must be not longer that 15!',
+            })
+            return
+        }
         const requestOptions = {
             method: 'POST',
             headers: {
+                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({login: login, password: password}),
         };
-        fetch('http://localhost:8080/try_register', requestOptions)
+        fetch(BASE_URL + '/try-register', requestOptions)
             .then(async result => {
                 if (result.status === 200) {
-                    localStorage.setItem('login', login)
                     let s = await result.json()
-                    localStorage.setItem('Bearer', s.JWT)
-                    window.location.href = "/table"
+                    localStorage.setItem('Bearer', s.access)
+                    localStorage.setItem('refresh', s.refresh)
+                    navigate("/table")
                 } else {
-                    await Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'This login is not unique:(',
-                    })
+                    if (result.status === 400) {
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Login is not unique:(',
+                        })
+                    } else
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong:(',
+                        })
                 }
             })
-            .catch(e => alert(e))
+            .catch(e => {
+                console.log(e)
+            })
 
     }
 

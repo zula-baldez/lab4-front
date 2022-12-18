@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import Swal from "sweetalert2";
+import {BASE_URL} from "../index";
 
 function LoginPage() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const registerClick = async () => navigate('/register');
 
     return (
         <div className="form" id="loginForm">
@@ -20,40 +23,50 @@ function LoginPage() {
 
                 />
                 <p>
-                    <button className="formElem" onClick={sendLoginQuery} id="submitButton">LOGIN</button>
+                    <button className="formElem" onClick={sendLoginQuery} id="submitButton">Login</button>
                 </p>
+                <p><button className="formElem" id="refer" onClick={registerClick}>Register new account</button></p>
             </div>
 
-            <p><Link to="/register" className="formElem" id="refer">New user? Register</Link></p>
 
         </div>
 
     )
     function sendLoginQuery() {
-        if (login == null || password == null) return
         const requestOptions = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+
             },
             body: JSON.stringify({login: login, password: password}),
         };
-        fetch('http://localhost:8080/try_login', requestOptions)
+        fetch(BASE_URL + '/try-login', requestOptions)
             .then(async result => {
                 if (result.status === 200) {
-                    localStorage.setItem('login', login)
                     let s = await result.json()
-                    localStorage.setItem('Bearer', s.JWT)
-                    window.location.href = "/table"
+                    localStorage.setItem('Bearer', s.access)
+                    localStorage.setItem('refresh', s.refresh)
+                    navigate("/table")
                 } else {
-                    await Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Wrong login or password:(',
-                    })
+                    if (result.status === 400) {
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Wrong password or login:(',
+                        })
+                    } else
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong:(',
+                        })
                 }
             })
-            .catch(e => alert(e))
+            .catch(async e => {
+                console.log(e)
+            })
 
     }
 
